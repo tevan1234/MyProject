@@ -9,6 +9,7 @@
 	<!-- Jquery -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<!-- 匯出按鈕 -->
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 	<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
@@ -21,8 +22,10 @@
 	<script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.print.min.js"></script>
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+	
 	<!-- 匯出按鈕 -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.dataTables.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" href="dataTable.css">
 	
 </head>
@@ -513,23 +516,27 @@
 	
 	<script>
             $(document).ready(function() {
-            	$('#example').DataTable({
+            	
+            	$('#example').DataTable({ 
+            		//中文化
+                    "language":{
+                        url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json" 
+                    },
+    				
+                	"lengthMenu": [ [10, 20, 30], [10, 20, 30] ],//決定一頁要顯示幾筆資料(下拉選單)
+                	
+            		
                     "stripeClasses": ['custom-odd', 'custom-even'], // 設定奇偶行樣式
                     "createdRow": function(row, data, index) {
                         $(row).hover(
                             function() { $(this).addClass('hover-highlight'); }, // 鼠標懸停
                             function() { $(this).removeClass('hover-highlight'); }
                         );
-                    },
-            	
-            		//中文化
-                    "language":{
-                        url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json" 
-                    },
-					
-                	"lengthMenu":[10, 20, 30],//決定一頁要顯示幾筆資料(下拉選單)
+                    },         
+                                	
+                  	
                 	
-                	
+                    //dom: 'RlBfrtip',
                 	//獨立欄位搜尋
                 	initComplete: function () {
 				        this.api()
@@ -562,7 +569,7 @@
 				        topStart: {
 				            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 				        }
-				    }
+				    },				    
                 	
                 });
             });
