@@ -142,6 +142,15 @@
                     </tr>
                 <% } %>
             </tbody>
+            <tfoot>
+	            <tr>
+	                <th>保單編號</th>
+                    <th>要保人</th>
+                    <th>被保人</th>
+                    <th>保險種類</th>
+                    <th>負責業務</th>
+	            </tr>
+	        </tfoot>
         </table>
     </div>
 
@@ -160,7 +169,28 @@
 			        topStart: {
 			            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 			        }
+			    },
+			    initComplete: function () {
+			        this.api()
+			            .columns()
+			            .every(function () {
+			                let column = this;
+			                let title = column.footer().textContent;
+			 
+			                // Create input element
+			                let input = document.createElement('input');
+			                input.placeholder = title;
+			                column.footer().replaceChildren(input);
+			 
+			                // Event listener for user input
+			                input.addEventListener('keyup', () => {
+			                    if (column.search() !== this.value) {
+			                        column.search(input.value).draw();
+			                    }
+			                });
+			            });
 			    }
+			    
             });
         });
     </script>

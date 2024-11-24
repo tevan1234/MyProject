@@ -15,6 +15,21 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
 		<link rel="stylesheet" href="/InsuranceSystem/css/buttons.css">
+		
+		<!-- DataTables -->
+	    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+	    
+	    <!-- DataTables Buttons -->
+	    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+	    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+	    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+	    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+	    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script> -->
+	    
 	</head>
 	<body style="background-color: #f4e500">
 		<%@ include file="/WEB-INF/view/menu.jsp" %>
@@ -36,7 +51,7 @@
 			        Prodouct 列表
 			        <a href="/InsuranceSystem/prodouct/rank" class="btn btn-outline-success" style="margin-left: 20px;">保單銷售排行</a>
 			    </legend>				
-				<table class="pure-table pure-table-bordered" style="background-color: white;">
+				<table id="myTable" class="pure-table pure-table-bordered" style="background-color: white;">
 					<thead>
 						<tr>
 							<th>ID</th><th>保險種類</th><th>年繳額</th><th>上架情形</th><th>售出件數</th>
@@ -55,8 +70,45 @@
 							<td><a href="/InsuranceSystem/prodouct/delete?prodouctId=<%= prodouctDto.getPid() %>" class="button-error pure-button"<c:if test="${userCert.role == 'EMPLOYEE'}">disabled</c:if>>刪除</a></td>
 						</tr>
 					<% } %>
+					
 				</table>
 			</fieldset>
 		</form>
+		<script>
+	        $(document).ready(function() {
+	            $('#myTable').DataTable({
+	            	
+	                language: {
+	                    url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json"
+	                },
+	                lengthMenu: [5, 10, 15],
+	                
+	                pageLength: 5,
+	                dom: 'RlBfrtip',
+	                
+				    initComplete: function () {
+				        this.api()
+				            .columns()
+				            .every(function () {
+				                let column = this;
+				                let title = column.footer().textContent;
+				 
+				                // Create input element
+				                let input = document.createElement('input');
+				                input.placeholder = title;
+				                column.footer().replaceChildren(input);
+				 
+				                // Event listener for user input
+				                input.addEventListener('keyup', () => {
+				                    if (column.search() !== this.value) {
+				                        column.search(input.value).draw();
+				                    }
+				                });
+				            });
+				    }
+				    
+	            });
+	        });
+	    </script>
 	</body>
 </html>

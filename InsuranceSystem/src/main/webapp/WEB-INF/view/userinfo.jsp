@@ -10,14 +10,20 @@
 	    <meta charset="UTF-8">
 	    <title>個人資訊頁面</title>
 	    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
-		<link rel="stylesheet" href="/InsuranceSystem/css/buttons.css">
 		
-		<!-- Jquery -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-		<!-- CSS -->
-		<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />  
-		<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+		<!-- DataTables -->
+	    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+	
+	    <!-- DataTables Buttons -->
+	    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+	    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+	    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+	    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 		
 	    <style>
 	        body {
@@ -121,7 +127,7 @@
 						    <li>儲蓄險 : </li>
 						</ul>
 					</div> -->
-		        	<table id="myTable" class="pure-table pure-table-bordered" style="background-color: white;">
+		        	<table id="myTable" class="display" style="background-color: white;">
 		        		<thead>
 		        			<tr>
 		        				<th>保單編號</th><th>保險種類</th><th>繳費年期</th><th>繳費狀態</th><th style="text-align: center;">詳情</th>
@@ -134,7 +140,7 @@
 		        				<td><%=orderDto.getOtype() %></td>
 		        				<td><%=orderDto.getOpayType() %></td>
 		        				<td><%=(orderDto.getOstatus())?"已繳完":"未繳完" %></td>
-		        				<td><a class="button-secondary pure-button" href="/InsuranceSystem/order/info?orderId=<%= orderDto.getOid() %>">詳情</a></td>
+		        				<td><a class="btn btn-secondary" href="/InsuranceSystem/order/info?orderId=<%= orderDto.getOid() %>">詳情</a></td>
 		        			</tr>
 		        		<% } %>
 		        	</table>
@@ -148,7 +154,13 @@
                         url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json" 
                     },
                     "lengthMenu":[5, 10, 15],
-                    "pageLength":'5'
+                    "pageLength":'5',
+                    dom: 'Blfrtip',
+                    layout: {
+    			        topStart: {
+    			            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+    			        }
+    			    }
 			    });
 			} );
 		</script>
