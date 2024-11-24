@@ -81,8 +81,7 @@
 	                language: {
 	                    url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/zh_Hant.json"
 	                },
-	                lengthMenu: [5, 10, 15],
-	                
+	                lengthMenu: [5, 10, 15],	                
 	                pageLength: 5,
 	                dom: 'RlBfrtip',
 	                
